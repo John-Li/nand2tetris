@@ -16,5 +16,14 @@ CHIP DMux4Way {
     OUT a, b, c, d;
 
     PARTS:
-    // Put your code here:
+    // Setup common logic
+    Not(in=sel[0], out=notSel0);
+    Not(in=sel[1], out=notSel1);
+    And(a=in, b=notSel1, out=inAndNotSel1);
+    And(a=in, b=sel[1], out=inAndSel1);
+    // Pipe into Ands
+    And(a=inAndNotSel1, b=notSel0, out=a);
+    And(a=inAndNotSel1, b=sel[0], out=b);
+    And(a=inAndSel1, b=notSel0, out=c);
+    And(a=inAndSel1, b=sel[0], out=d);
 }
